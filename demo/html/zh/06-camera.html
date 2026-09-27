@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="zh" dir="ltr"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#F6F2EA">
+  <title>(14) Maggie's day</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;700&amp;family=Fraunces:opsz,wght@9..144,700&amp;display=swap">
+  <style data-from="/static/family.css">:root { --paper: #F6F2EA; --paper-lift: #FDFBF7; --ink: #241E19; --ink-2: #5C5149; --ink-3: #786D63; --rule: #E3D9C9; --amber: #E0900F; --amber-deep: #A96A06; --amber-wash: #FBEFD8; --alarm: #B3341B; --alarm-wash: #FBE7E2; --watch: #9A6510; --watch-wash: #FAEBD6; --calm: #2F6A46; --calm-wash: #E3F0E7; --face-display: "Fraunces", Georgia, "Songti SC", serif; --face-ui: "Atkinson Hyperlegible Next", "Atkinson Hyperlegible", system-ui,
+             "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; --t-elder-body: 23px; --t-elder-say: 25px; --t-elder-lead: 21px; --t-body: 17px; --t-lead: 20px; --t-meta: 15px; --r-chip: 999px; --r-card: 20px; --r-panel: 28px; --r-control: 18px; --lift-1: 0 0 10px rgba(36, 30, 25, 0.10); --lift-2: 0 0 18px rgba(36, 30, 25, 0.14); --gutter: 22px; --tap: 48px; }
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0px; }
+body { background: var(--paper); color: var(--ink); font-family: var(--face-ui); font-size: var(--t-body); line-height: 1.5; text-size-adjust: 100%; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.dash { max-width: 760px; margin: 0px auto; padding: max(18px, env(safe-area-inset-top)) var(--gutter)
+           max(28px, env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: 22px; }
+.alert-banner { position: sticky; top: 0px; z-index: 10; display: flex; align-items: flex-start; gap: 14px; padding: calc(15px + env(safe-area-inset-top)) var(--gutter) 16px; background: var(--alarm); color: rgb(255, 255, 255); }
+.alert-banner-title { margin: 0px; font-size: 19px; font-weight: 700; }
+.alert-banner-content { margin: 3px 0px 0px; font-size: var(--t-body); }
+.alert-banner-time { margin: 3px 0px 0px; font-size: var(--t-meta); opacity: 0.85; }
+.alert-banner .actions { margin-left: auto; display: flex; gap: 8px; flex: 0 0 auto; }
+.dash-header { display: flex; align-items: center; gap: 13px; flex-wrap: wrap; }
+.dash-header .avatar { width: 38px; height: 38px; flex: 0 0 auto; }
+.dash-header .disc { fill: var(--amber); }
+.dash-header .ray { stroke: var(--amber); }
+.dash-header h1 { font-family: var(--face-display); font-weight: 700; font-size: 27px; margin: 0px; letter-spacing: -0.015em; line-height: 1.15; }
+.dash-header .meta { margin: 1px 0px 0px; color: var(--ink-2); font-size: var(--t-meta); }
+.header-tools { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.live { display: inline-flex; align-items: center; gap: 7px; font-size: var(--t-meta); color: var(--ink-2); }
+.live .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--ink-3); }
+.live[data-state="live"] .dot { background: var(--calm); }
+.live[data-state="connecting"] .dot, .live[data-state="reconnecting"] .dot { background: var(--watch); }
+.summary-card { }
+.summary-card h2 { font-size: var(--t-meta); font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--ink-3); margin: 0px 0px 9px; }
+.summary-text { font-family: var(--face-display); font-weight: 700; font-size: clamp(23px, 5vw, 29px); line-height: 1.38; letter-spacing: -0.015em; margin: 0px; }
+.summary-card .meta { margin: 11px 0px 0px; color: var(--ink-3); font-size: var(--t-meta); }
+.card-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.card { background: var(--paper-lift); border: 1px solid var(--rule); border-radius: var(--r-panel); padding: 19px; box-shadow: var(--lift-1); }
+.card > h2 { font-size: 20px; font-weight: 700; margin: 0px 0px 13px; letter-spacing: -0.01em; }
+.count-badge { display: inline-block; margin-left: 8px; padding: 2px 10px; border-radius: var(--r-chip); background: var(--alarm); color: rgb(255, 255, 255); font-size: var(--t-meta); font-weight: 700; vertical-align: middle; }
+.alert-list { list-style: none; margin: 0px; padding: 0px; display: flex; flex-direction: column; gap: 11px; }
+.alert-item { display: grid; grid-template-columns: auto minmax(0px, 1fr) auto; gap: 3px 12px; align-items: start; padding: 13px 15px; border-radius: var(--r-card); border-top-color: ; border-top-style: ; border-top-width: ; border-right-color: ; border-right-style: ; border-right-width: ; border-bottom-color: ; border-bottom-style: ; border-bottom-width: ; border-left-color: ; border-left-style: ; border-image-source: ; border-image-slice: ; border-image-width: ; border-image-outset: ; border-image-repeat: ; border-left-width: 5px; }
+.alert-item.level-high { border-left-color: var(--alarm); background: var(--alarm-wash); }
+.alert-item.level-medium { border-left-color: var(--watch); background: var(--watch-wash); }
+.alert-item.is-read { opacity: 0.58; }
+.alert-icon { grid-row: span 3; font-size: 21px; line-height: 1.2; }
+.alert-title { margin: 0px; font-weight: 700; font-size: 18px; }
+.alert-content { margin: 2px 0px 0px; color: var(--ink-2); }
+.alert-item .meta { margin: 2px 0px 0px; color: var(--ink-3); font-size: var(--t-meta); }
+.level-badge { display: inline-block; margin-right: 7px; padding: 1px 9px; border-radius: var(--r-chip); font-size: 13px; font-weight: 700; color: rgb(255, 255, 255); vertical-align: 2px; }
+.level-badge.level-high { background: var(--alarm); }
+.level-badge.level-medium { background: var(--watch); }
+.empty { color: var(--ink-3); margin: 0px; }
+.legend { display: flex; flex-wrap: wrap; gap: 7px; margin: 0px 0px 15px; padding: 0px; list-style: none; }
+.legend li { padding: 3px 11px; border-radius: var(--r-chip); font-size: 13px; font-weight: 700; border: 1px solid transparent; }
+.sev-red_flag { background: var(--alarm); color: rgb(255, 255, 255); }
+.sev-severe { background: var(--alarm-wash); color: var(--alarm); border-color: rgb(233, 196, 185); }
+.sev-moderate { background: var(--watch-wash); color: var(--watch); border-color: rgb(231, 210, 176); }
+.sev-mild { background: var(--calm-wash); color: var(--calm); border-color: rgb(195, 219, 203); }
+.sev-unknown { background: var(--paper); color: var(--ink-2); border-color: var(--rule); }
+.timeline { list-style: none; margin: 0px; padding: 0px; }
+.day { position: relative; padding: 0px 0px 15px 21px; border-left: 2px solid var(--rule); margin-left: 6px; }
+.day::before { content: ""; position: absolute; left: -8px; top: 5px; width: 13px; height: 13px; border-radius: 50%; background: var(--amber); border: 2px solid var(--ink); }
+.day.is-empty::before { background: var(--paper-lift); border-color: var(--rule); }
+.day:last-child { padding-bottom: 0px; }
+.day-label { margin: 0px 0px 6px; font-size: var(--t-meta); font-weight: 700; }
+.day.is-empty .day-label { color: var(--ink-3); font-weight: 400; }
+.quiet-run { margin: 0px; color: var(--ink-3); font-size: var(--t-meta); }
+.day.is-empty .meta { margin: 2px 0px 0px; color: var(--ink-3); font-size: 13px; }
+.symptom-list { list-style: none; margin: 0px; padding: 0px; display: flex; flex-direction: column; gap: 6px; }
+.symptom summary { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; cursor: pointer; list-style: none; min-height: 40px; }
+.symptom summary::-webkit-details-marker { display: none; }
+.symptom summary::after { content: "›"; color: var(--ink-3); }
+.symptom[open] summary::after { transform: rotate(90deg); }
+.fall-card { background: var(--ink); border-color: var(--ink); color: var(--paper-lift); }
+.fall-card > .card-head h2 { color: var(--paper-lift); }
+.fall-card .meta { color: rgb(184, 171, 160); }
+.fall-view { margin-top: 12px; border-radius: var(--r-card); overflow: hidden; background: rgb(23, 19, 16); aspect-ratio: 4 / 3; display: grid; place-items: center; }
+.fall-view img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.fall-offline { color: rgb(157, 143, 132); margin: 0px; font-size: var(--t-meta); text-align: center; padding: 0px 16px; }
+.history-card summary { cursor: pointer; list-style: none; display: flex; align-items: baseline; gap: 10px; }
+.history-card summary::-webkit-details-marker { display: none; }
+.history-card summary h2 { display: inline; font-size: 20px; margin: 0px; }
+.history-list { list-style: none; margin: 13px 0px 0px; padding: 0px; display: flex; flex-direction: column; gap: 10px; }
+.history-msg { padding: 11px 14px; border-radius: var(--r-card); background: var(--paper); border: 1px solid var(--rule); }
+.history-msg.user { align-self: flex-end; background: var(--amber-wash); border-color: rgb(234, 220, 192); }
+.history-msg .meta { margin: 0px 0px 3px; color: var(--ink-3); font-size: 13px; }
+.history-msg p:last-child { margin: 0px; }
+.dash-footer { color: var(--ink-3); font-size: var(--t-meta); text-align: center; line-height: 1.5; }
+.btn { min-height: 40px; padding: 0px 15px; border-radius: var(--r-chip); cursor: pointer; font-family: var(--face-ui); font-size: var(--t-meta); font-weight: 700; border: 1px solid var(--rule); background: var(--paper-lift); color: var(--ink); }
+.btn:active { background: var(--amber-wash); }
+.btn-quiet { background: var(--paper-lift); }
+.btn-small { min-height: 36px; padding: 0px 12px; }
+.btn-light { background: rgb(255, 255, 255); color: var(--alarm); border-color: rgb(255, 255, 255); }
+.btn-ghost-light { background: transparent; color: rgb(255, 255, 255); border-color: rgba(255, 255, 255, 0.55); }
+.lang-switch { min-height: 40px; }
+@media (max-width: 480px) {
+  .alert-item { grid-template-columns: auto minmax(0px, 1fr); }
+  .alert-item > .btn { grid-column: 2; justify-self: start; margin-top: 7px; }
+  .alert-banner { flex-direction: column; }
+  .alert-banner .actions { margin-left: 0px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { animation: auto ease 0s 1 normal none running none !important; transition: none !important; }
+}
+.dash { padding-bottom: calc(var(--tabbar-h) + 26px); }
+:root { --tabbar-h: 62px; }
+.tabbar { position: fixed; left: 0px; right: 0px; bottom: 0px; z-index: 20; display: grid; grid-template-columns: repeat(5, 1fr); background: color-mix(in srgb, var(--paper-lift) 92%, transparent); backdrop-filter: blur(14px); border-top: 1px solid var(--rule); padding-bottom: env(safe-area-inset-bottom); }
+.tabbar button { appearance: none; border: 0px; background: none; cursor: pointer; min-height: var(--tabbar-h); padding: 7px 4px 5px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-family: var(--face-ui); font-size: 12px; font-weight: 700; color: var(--ink-3); -webkit-tap-highlight-color: transparent; }
+.tabbar button svg { width: 23px; height: 23px; fill: none; stroke: currentcolor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.tabbar button[aria-selected="true"] { color: var(--amber-deep); }
+.tabbar .tab-dot { position: absolute; transform: translate(13px, -11px); min-width: 17px; height: 17px; padding: 0px 4px; border-radius: var(--r-chip); background: var(--alarm); color: rgb(255, 255, 255); font-size: 11px; line-height: 17px; text-align: center; }
+.tab-wrap { position: relative; display: inline-flex; }
+.panel[hidden] { display: none !important; }
+.panel { display: flex; flex-direction: column; gap: 22px; }
+@media (min-width: 860px) {
+  .tabbar { display: none; }
+  .dash { padding-bottom: 40px; max-width: 820px; }
+  .panel[hidden] { display: flex !important; }
+}
+.alert-item img { display: block; width: 100%; max-width: 100%; height: auto; margin-top: 9px; border-radius: var(--r-card); background: var(--paper); }
+.alert-item > img { grid-column: 2 / -1; }
+.dash, .card, .alert-item { max-width: 100%; min-width: 0px; }
+.card img, .card video { max-width: 100%; }
+.member-picker { display: inline-flex; align-items: center; gap: 7px; font-size: var(--t-meta); color: var(--ink-2); }
+.member-picker select { min-height: 40px; padding: 0px 10px; border-radius: var(--r-control); border: 1px solid var(--rule); background: var(--paper-lift); color: var(--ink); font-family: var(--face-ui); font-size: var(--t-meta); }
+.member-picker select:focus-visible { outline: 3px solid var(--ink); outline-offset: 1px; }
+.report-links { display: flex; flex-wrap: wrap; gap: 8px; margin: 15px 0px 0px; }
+.care-intro, .reminders-intro { margin: -3px 0px 12px; color: var(--ink-2); font-size: var(--t-meta); }
+.reminders-note { margin: 10px 0px 0px; font-size: 13px; color: var(--ink-3); }
+.care-list, .reminder-list { list-style: none; margin: 0px; padding: 0px; display: flex; flex-direction: column; gap: 10px; }
+.care-item, .reminder-item { display: grid; grid-template-columns: minmax(0px, 1fr) auto; gap: 4px 10px; align-items: start; padding: 12px 14px; border: 1px solid var(--rule); border-radius: var(--r-card); }
+.care-item:last-child { margin-bottom: 0px; }
+.care-title, .reminder-text { margin: 0px; font-weight: 700; overflow-wrap: anywhere; }
+.care-kind, .reminder-when-label { margin: 0px; font-size: 13px; color: var(--ink-3); }
+.care-item .quote { margin: 4px 0px 0px; color: var(--ink-2); font-style: italic; overflow-wrap: anywhere; }
+.care-item .meta, .reminder-item .meta { grid-column: 1 / -1; }
+.reminder-item.is-off { opacity: 0.62; }
+.adherence { display: flex; gap: 5px; margin: 6px 0px 0px; padding: 0px; list-style: none; grid-column: 1 / -1; }
+.dose { width: 20px; height: 20px; border-radius: 50%; border: 1px solid var(--rule); background: var(--paper-lift); display: grid; place-items: center; font-size: 11px; font-weight: 700; line-height: 1; }
+.dose-confirmed { background: var(--calm-wash); border-color: rgb(155, 194, 168); color: var(--calm); }
+.dose-declined { background: var(--watch-wash); border-color: rgb(223, 190, 134); color: var(--watch); }
+.dose-no_response { background: var(--alarm-wash); border-color: rgb(227, 175, 164); color: var(--alarm); }
+.dose-none { color: var(--ink-3); }
+.adherence-summary { font-size: 13px; color: var(--ink-3); white-space: nowrap; }
+.reminder-form { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--rule); display: grid; gap: 10px; }
+.reminder-form input[type="text"] { min-height: var(--tap); padding: 0px 13px; width: 100%; border: 1px solid var(--rule); border-radius: var(--r-control); background: var(--paper-lift); color: var(--ink); font-family: var(--face-ui); }
+.reminder-form input:focus-visible, .reminder-radio input:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+.reminder-when { display: flex; flex-wrap: wrap; gap: 8px 18px; }
+.reminder-radio { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; color: var(--ink-2); }
+.reminder-radio input[type="time"], .reminder-radio input[type="date"] { min-height: 38px; padding: 0px 8px; border: 1px solid var(--rule); border-radius: var(--r-control); background: var(--paper-lift); color: var(--ink); font-family: var(--face-ui); font-size: 14px; }
+.reminder-radio input:disabled { opacity: 0.5; }
+.btn-attention { background: var(--amber); border-color: var(--amber); color: var(--ink); }
+.reminder-form .btn-attention { justify-self: start; }
+.reminder-error { margin: 0px; color: var(--alarm); font-size: 13px; font-weight: 700; }
+.claim { margin: 4px 0px 0px; font-size: var(--t-meta); color: var(--ink-2); }
+.claim-badge { display: inline-block; padding: 1px 9px; border-radius: var(--r-chip); background: var(--watch-wash); color: var(--watch); font-size: 13px; font-weight: 700; }
+.claim-badge.is-done { background: var(--calm-wash); color: var(--calm); }
+.claim-form { display: flex; gap: 8px; margin: 8px 0px 0px; grid-column: 1 / -1; }
+.claim-input { flex: 1 1 0%; min-height: 40px; padding: 0px 12px; border: 1px solid var(--rule); border-radius: var(--r-control); background: var(--paper-lift); color: var(--ink); font-family: var(--face-ui); }
+.claim-input:focus-visible { outline: 3px solid var(--ink); outline-offset: 1px; }
+.history-msg.is-private { border-style: dashed; opacity: 0.78; }
+.private-note { margin: 18px 0px 0px; padding-top: 12px; border-top: 1px solid var(--rule); color: var(--ink-3); }
+.dash-header-tools { margin-left: auto; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.dash-brand { display: flex; align-items: center; gap: 13px; }
+.dash-sub { margin: 1px 0px 0px; color: var(--ink-2); font-size: var(--t-meta); }
+.chip { display: inline-block; padding: 3px 11px; border-radius: var(--r-chip); font-size: 13px; font-weight: 700; }
+.sev-red { background: var(--alarm); color: rgb(255, 255, 255); }
+.fall-controls { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.fall-controls .btn { border-color: rgba(255, 255, 255, 0.4); color: var(--paper-lift); background: transparent; }
+.fall-controls .btn[aria-pressed="true"] { background: var(--amber); border-color: var(--amber); color: var(--ink); }
+.fall-error { margin: 10px 0px 0px; color: rgb(240, 169, 155); font-size: var(--t-meta); font-weight: 700; }
+</style>
+  
+  <meta name="apple-mobile-web-app-title" content="Hallo Care">
+  <!-- iOS ignores the manifest: these three meta tags are what make "Add to Home Screen"
+       open full screen, and it only ever uses apple-touch-icon.png. -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="apple-touch-icon" href="/static/icons/apple-touch-icon.png">
+  <link rel="icon" href="/static/icons/icon-192.png" type="image/png">
+</head>
+<body class="family">
+  <div id="alert-banner" class="alert-banner" role="alert" data-level="high">
+    <div class="alert-banner-body">
+      <p class="alert-banner-title"><span aria-hidden="true">⚠</span> <span id="banner-title">检测到跌倒</span></p>
+      <p id="banner-content" class="alert-banner-content">有人摔倒后已经 3 秒没有起身，请尽快去看看。</p>
+      <p id="banner-time" class="alert-banner-time">跌倒检测 · 11:37</p>
+    </div>
+    <div class="actions alert-banner-actions">
+      <button id="banner-read" type="button" class="btn btn-light">标为已读</button>
+      <button id="banner-close" type="button" class="btn btn-ghost-light" aria-label="标为已读">✕</button>
+    </div>
+  </div>
+
+  <main class="dash">
+    <header class="dash-header">
+      <div class="dash-brand">
+        <svg class="avatar" viewBox="0 0 48 48" aria-hidden="true">
+          <circle class="disc" cx="24" cy="24" r="10.5"></circle>
+          <g class="ray" stroke-width="3.5" stroke-linecap="round">
+            <line x1="24" y1="4" x2="24" y2="9"></line><line x1="24" y1="39" x2="24" y2="44"></line>
+            <line x1="4" y1="24" x2="9" y2="24"></line><line x1="39" y1="24" x2="44" y2="24"></line>
+            <line x1="9.9" y1="9.9" x2="13.4" y2="13.4"></line><line x1="34.6" y1="34.6" x2="38.1" y2="38.1"></line>
+            <line x1="9.9" y1="38.1" x2="13.4" y2="34.6"></line><line x1="34.6" y1="13.4" x2="38.1" y2="9.9"></line>
+          </g>
+        </svg>
+        <div>
+          <h1>Maggie的今天</h1>
+          <p class="dash-sub">Margaret Lee，正在和Hallo聊天</p>
+        </div>
+      </div>
+      <div class="dash-header-tools">
+        <label class="member-picker">当前身份
+          <select id="member-select" aria-label="Family member"><option value="1">Amy (daughter)</option><option value="2">Ben (son)</option></select>
+        </label>
+        <button id="sound-btn" type="button" class="btn btn-quiet" aria-pressed="false">🔕 提示音关</button>
+        <span id="live" class="live" data-state="live"><span class="dot" aria-hidden="true"></span><span id="live-text">实时</span></span>
+        <button id="lang-btn" class="btn lang-switch" type="button" data-next="en">English</button>
+      </div>
+    </header>
+
+    <!-- How is she today: the one answer the reader came for, then the week behind it. -->
+    <div id="panel-today" class="panel" role="tabpanel" aria-labelledby="tab-today" hidden="">
+      <section class="summary-card" aria-labelledby="summary-h">
+        <div class="card-head">
+          <h2 id="summary-h">今天</h2>
+          <button id="summary-refresh" type="button" class="btn btn-quiet">刷新</button>
+        </div>
+        <p id="summary-text" class="summary-text">Maggie was in good spirits and chatted about her garden. She mentioned feeling dizzy in the mornings and, later, chest tightness with trouble breathing, which raised an emergency alert. Please check in with her today. Part of today's conversation is not shared: Maggie chose to keep it private or has not said yet whether to share it.</p>
+        <p id="summary-meta" class="meta">11:38 更新</p>
+        <nav class="report-links" aria-label="Reports">
+          <a class="btn btn-quiet" href="/family/report/weekly">周报</a>
+          <a class="btn btn-quiet" href="/family/doctor">就诊单页</a>
+          <a class="btn btn-quiet" href="/family/memoir">Maggie的故事</a>
+        </nav>
+      </section>
+
+      <section class="card symptoms-card" aria-labelledby="symptoms-h">
+        <h2 id="symptoms-h">近 7 天症状</h2>
+        <ul class="legend" aria-label="Legend">
+          <li class="sev-red_flag">急症信号</li>
+          <li class="sev-severe">严重</li>
+          <li class="sev-moderate">中等</li>
+          <li class="sev-mild">轻微</li>
+          <li class="sev-unknown">未说明</li>
+        </ul>
+        <ol id="timeline" class="timeline"><li class="day"><h3 class="day-label">今天</h3><ul class="symptom-list"><li class="symptom"><details><summary><span class="chip sev-red">胸痛胸闷<span class="chip-count"> ×7</span></span><span class="sym-status sym-status-ongoing">持续</span></summary><div class="symptom-detail"><blockquote class="quote" lang="en">“chest”</blockquote><p class="meta">部位：chest · 程度：未说明 · 最近提到 0:26</p></div></details></li><li class="symptom"><details><summary><span class="chip sev-red">呼吸困难<span class="chip-count"> ×7</span></span><span class="sym-status sym-status-ongoing">持续</span></summary><div class="symptom-detail"><blockquote class="quote" lang="en">“catch my breath”</blockquote><p class="meta">程度：未说明 · 最近提到 0:26</p></div></details></li></ul></li><li class="day is-empty"><p class="quiet-run">9月21日周一 至 昨天 · 没有提到不适</p><p class="meta">6 天没有提到不适</p></li></ol>
+      </section>
+    </div>
+
+    <!-- What happened: one merged stream, newest first, chat and falls together. -->
+    <div id="panel-alerts" class="panel" role="tabpanel" aria-labelledby="tab-alerts" hidden="">
+      <section class="card alerts-card" aria-labelledby="alerts-h">
+        <h2 id="alerts-h">提醒 <span id="unread-count" class="count-badge">14 条新</span></h2>
+        <ul id="alert-list" class="alert-list"><li class="alert-item level-high" data-id="14"><div class="alert-icon" aria-hidden="true">🧍</div><div class="alert-main"><p class="alert-title"><span class="level-badge level-high">紧急</span> 检测到跌倒</p><p class="alert-content">有人摔倒后已经 3 秒没有起身，请尽快去看看。</p><p class="meta">跌倒检测 · 11:37</p></div><a class="snapshot" href="/media/snapshots/fall_20260927_183751_0219.jpg" target="_blank" rel="noopener"><img src="/media/snapshots/fall_20260927_183751_0219.jpg" alt="跌倒发生时的画面" loading="lazy"></a><button class="btn btn-quiet btn-small" type="button">标为已读</button><div class="claim"><button type="button" class="btn btn-small">I'll handle this</button></div></li><li class="alert-item level-high" data-id="13"><div class="alert-icon" aria-hidden="true">🧍</div><div class="alert-main"><p class="alert-title"><span class="level-badge level-high">紧急</span> 检测到跌倒</p><p class="alert-content">有人摔倒后已经 3 秒没有起身，请尽快去看看。</p><p class="meta">跌倒检测 · 11:37</p></div><a class="snapshot" href="/media/snapshots/fall_20260927_183718_0ac9.jpg" target="_blank" rel="noopener"><img src="/media/snapshots/fall_20260927_183718_0ac9.jpg" alt="跌倒发生时的画面" loading="lazy"></a><button class="btn btn-quiet btn-small" type="button">标为已读</button><div class="claim"><button type="button" class="btn btn-small">I'll handle this</button></div></li><li class="alert-item level-high" data-id="12"><div class="alert-icon" aria-hidden="true">🧍</div><div class="alert-main"><p class="alert-title"><span class="level-badge level-high">紧急</span> 检测到跌倒</p><p class="alert-content">有人摔倒后已经 3 秒没有起身，请尽快去看看。</p><p class="meta">跌倒检测 · 0:34</p></div><a class="snapshot" href="/media/snapshots/fall_20260927_073431_067d.jpg" target="_blank" rel="noopener"><img src="/media/snapshots/fall_20260927_073431_067d.jpg" alt="跌倒发生时的画面" loading="lazy"></a><button class="btn btn-quiet btn-small" type="button">标为已读</button><div class="claim"><button type="button" class="btn btn-small">I'll handle this</button></div></li><li class="alert-item level-high" data-id="11"><div class="alert-icon" aria-hidden="true">🧍</div><div class="alert-main"><p class="alert-title"><span class="level-badge level-high">紧急</span> 检测到跌倒</p><p class="alert-content">有人摔倒后已经 3 秒没有起身，请尽快去看看。</p><p class="meta">跌倒检测 · 0:26</p></div><a class="snapshot" href="/media/snapshots/fall_20260927_072618_1e6e.jpg" target="_blank" rel="noopener"><img src="/media/snapshots/fall_20260927_072618_1e6e.jpg" alt="跌倒发生时的画面" loading="lazy"></a><button class="btn btn-quiet btn-small" type="button">标为已读</button><div class="claim"><button type="button" class="btn btn-small">I'll handle this</button></div></li><li class="alert-item level-high" data-id="10"><div class="alert-icon" aria-hidden="true">🧍</div><div class="alert-main"><p class="alert-title"><span class="level-badge level-high">紧急</span> 检测到跌倒</p><p class="alert-content">有人摔倒后已经 3 秒没有起身，请尽快去看看。</p><p class="meta">跌倒检测 · 0:24</p></div><a class="snapshot" href="/media/snapshots/fall_20260927_072439_2eaa.jpg" target="_blank" rel="noopener"><img src="/media/snapshots/fall_20260927_072439_2eaa.jpg" alt="跌倒发生时的画面" loading="lazy"></a><button class="btn btn-quiet btn-small" type="button">标为已读</button><div class="claim"><button type="button" class="btn btn-small">I'll handle this</button></div></li><li class="alert-item level-high" data-id="9"><div class="alert-icon" aria-hidden="true">🧍</div><div class="alert-main"><p class="alert-title"><span class="level-badge level-high">紧急</span> 检测到跌倒</p><p class="alert-content">有人摔倒后已经 3 秒没有起身，请尽快去看看。</p><p class="meta">跌倒检测 · 0:23</p></div><a class="snapshot" href="/media/snapshots/fall_20260927_072316_a9eb.jpg" target="_blank" rel="noopener"><img src="/media/snapshots/fall_20260927_072316_a9eb.jpg" alt="跌倒发生时的画面" loading="lazy"></a><button class="btn btn-quiet btn-small" type="button">标为已读</button><div class="claim"><button type="button" class="btn btn-small">I'll handle this</button></div></li><li class="alert-item level-high" data-id="8"><div class="alert-icon" aria-hidden="true">🧍</div><div class="alert-main"><p class="alert-title"><span class="level-badge level-high">紧急</span> 检测到跌倒</p><p class="alert-content">有人摔倒后已经 3 秒没有起身，请尽快去看看。</p><p class="meta">跌倒检测 · 0:21</p></div><a class="snapshot" href="/media/snapshots/fall_20260927_072145_4f1f.jpg" target="_blank" rel="noopener"><img src="/media/snapshots/fall_20260927_072145_4f1f.jpg" alt="跌倒发生时的画面" loading="lazy"></a><button class="btn btn-quiet btn-small" type="button">标为已读</button><div class="claim"><button type="button" class="btn btn-small">I'll handle this</button></div></li><li class="alert-item level-high" data-id="7"><div class="alert-icon" aria-hidden="true">🧍</div><div class="alert-main"><p class="alert-title"><span class="level-badge level-high">紧急</span> 检测到跌倒</p><p class="alert-content">有人摔倒后已经 3 秒没有起身，请尽快去看看。</p><p class="meta">跌倒检测 · 0:20</p></div><a class="snapshot" href="/media/snapshots/fall_20260927_072025_53a2.jpg" target="_blank" rel="noopener"><img src="/media/snapshots/fall_20260927_072025_53a2.jpg" alt="跌倒发生时的画面" loading="lazy"></a><button class="btn btn-quiet btn-small" type="button">标为已读</button><div class="claim"><button type="button" class="btn btn-small">I'll handle this</button></div></li><li class="alert-item level-high" data-id="6"><div class="alert-icon" aria-hidden="true">🧍</div><div class="alert-main"><p class="alert-title"><span class="level-badge level-high">紧急</span> 检测到跌倒</p><p class="alert-content">有人摔倒后已经 3 秒没有起身，请尽快去看看。</p><p class="meta">跌倒检测 · 0:12</p></div><a class="snapshot" href="/media/snapshots/fall_20260927_071211_ed22.jpg" target="_blank" rel="noopener"><img src="/media/snapshots/fall_20260927_071211_ed22.jpg" alt="跌倒发生时的画面" loading="lazy"></a><button class="btn btn-quiet btn-small" type="button">标为已读</button><div class="claim"><button type="button" class="btn btn-small">I'll handle this</button></div></li><li class="alert-item level-high" data-id="5"><div class="alert-icon" aria-hidden="true">🧍</div><div class="alert-main"><p class="alert-title"><span class="level-badge level-high">紧急</span> 检测到跌倒</p><p class="alert-content">有人摔倒后已经 3 秒没有起身，请尽快去看看。</p><p class="meta">跌倒检测 · 0:10</p></div><a class="snapshot" href="/media/snapshots/fall_20260927_071014_90f1.jpg" target="_blank" rel="noopener"><img src="/media/snapshots/fall_20260927_071014_90f1.jpg" alt="跌倒发生时的画面" loading="lazy"></a><button class="btn btn-quiet btn-small" type="button">标为已读</button><div class="claim"><button type="button" class="btn btn-small">I'll handle this</button></div></li><li class="alert-item level-high" data-id="4"><div class="alert-icon" aria-hidden="true">🩺</div><div class="alert-main"><p class="alert-title"><span class="level-badge level-high">紧急</span> 呼吸困难</p><p class="alert-content">Maggie said: "my chest feels tight and I cannot catch my breath"</p><p class="meta">来自聊天 · 0:09</p></div><button class="btn btn-quiet btn-small" type="button">标为已读</button><div class="claim"><button type="button" class="btn btn-small">I'll handle this</button></div></li><li class="alert-item level-high" data-id="3"><div class="alert-icon" aria-hidden="true">🩺</div><div class="alert-main"><p class="alert-title"><span class="level-badge level-high">紧急</span> 胸痛胸闷</p><p class="alert-content">Maggie said: "my chest feels tight and I cannot catch my breath"</p><p class="meta">来自聊天 · 0:09</p></div><button class="btn btn-quiet btn-small" type="button">标为已读</button><div class="claim"><button type="button" class="btn btn-small">I'll handle this</button></div></li><li class="alert-item level-high" data-id="2"><div class="alert-icon" aria-hidden="true">🧍</div><div class="alert-main"><p class="alert-title"><span class="level-badge level-high">紧急</span> 检测到跌倒</p><p class="alert-content">有人摔倒后已经 3 秒没有起身，请尽快去看看。</p><p class="meta">跌倒检测 · 0:09</p></div><a class="snapshot" href="/media/snapshots/fall_20260927_070950_0a1b.jpg" target="_blank" rel="noopener"><img src="/media/snapshots/fall_20260927_070950_0a1b.jpg" alt="跌倒发生时的画面" loading="lazy"></a><button class="btn btn-quiet btn-small" type="button">标为已读</button><div class="claim"><button type="button" class="btn btn-small">I'll handle this</button></div></li><li class="alert-item level-high" data-id="1"><div class="alert-icon" aria-hidden="true">🧍</div><div class="alert-main"><p class="alert-title"><span class="level-badge level-high">紧急</span> 检测到跌倒</p><p class="alert-content">有人摔倒后已经 3 秒没有起身，请尽快去看看。</p><p class="meta">跌倒检测 · 0:09</p></div><a class="snapshot" href="/media/snapshots/fall_20260927_070917_dcd9.jpg" target="_blank" rel="noopener"><img src="/media/snapshots/fall_20260927_070917_dcd9.jpg" alt="跌倒发生时的画面" loading="lazy"></a><button class="btn btn-quiet btn-small" type="button">标为已读</button><div class="claim"><button type="button" class="btn btn-small">I'll handle this</button></div></li></ul>
+        <p id="alerts-empty" class="empty" hidden="">暂无提醒，一切都好。</p>
+      </section>
+    </div>
+
+    <!-- What she is carrying, and what the family wants brought up next time. -->
+    <div id="panel-care" class="panel" role="tabpanel" aria-labelledby="tab-care" hidden="">
+      <section class="card care-card" aria-labelledby="care-h">
+        <div class="card-head">
+          <h2 id="care-h">Maggie常挂在心上的</h2>
+        </div>
+        <p class="meta care-intro">她反复提起的人和事。</p>
+        <ul id="care-list" class="care-list"></ul>
+        <p id="care-empty" class="empty">暂时还没有。她多次提到的人和话题会出现在这里。</p>
+      </section>
+
+      <section class="card reminders-card" aria-labelledby="reminders-h">
+        <div class="card-head">
+          <h2 id="reminders-h">提醒事项</h2>
+          <span class="meta">近 7 天</span>
+        </div>
+        <p class="meta reminders-intro">Hallo会在Maggie下次聊天时，用你的原话提起这些。</p>
+        <ul id="reminder-list" class="reminder-list"><li class="reminder-item" data-id="1"><div><p class="reminder-text">blood pressure pill with breakfast</p><p class="reminder-when-label">Every day at 08:00 · set by Amy</p></div><button class="btn btn-quiet btn-small" type="button" aria-label="Turn off the reminder: blood pressure pill with breakfast">Turn off</button><ul class="adherence" aria-label="Last 7 days"><li class="dose dose-none" title="周一: not asked">·<span class="visually-hidden">周一: not asked</span></li><li class="dose dose-none" title="周二: not asked">·<span class="visually-hidden">周二: not asked</span></li><li class="dose dose-none" title="周三: not asked">·<span class="visually-hidden">周三: not asked</span></li><li class="dose dose-none" title="周四: not asked">·<span class="visually-hidden">周四: not asked</span></li><li class="dose dose-none" title="周五: not asked">·<span class="visually-hidden">周五: not asked</span></li><li class="dose dose-none" title="周六: not asked">·<span class="visually-hidden">周六: not asked</span></li><li class="dose dose-mentioned" title="周日: undefined">·<span class="visually-hidden">周日: undefined</span></li></ul><span class="adherence-summary">0/1 days</span></li></ul>
+        <p id="reminders-empty" class="empty" hidden="">还没有提醒，在下面添加一条。</p>
+
+        <form id="reminder-form" class="reminder-form" autocomplete="off">
+          <label class="visually-hidden" for="reminder-text">想让Hallo提醒什么？</label>
+          <input id="reminder-text" type="text" maxlength="200" required="" placeholder="例如：早饭后吃降压药">
+          <div class="reminder-when">
+            <label class="reminder-radio">
+              <input type="radio" name="reminder-kind" value="daily" checked=""> 每天
+              <input id="reminder-time" type="time" value="08:00" aria-label="Time of day">
+            </label>
+            <label class="reminder-radio">
+              <input type="radio" name="reminder-kind" value="once"> 仅一次
+              <input id="reminder-date" type="date" aria-label="Date" disabled="">
+            </label>
+          </div>
+          <p id="reminder-error" class="reminder-error" role="alert" hidden=""></p>
+          <button type="submit" class="btn btn-attention">添加提醒</button>
+        </form>
+        <p class="meta reminders-note">Hallo只会重复你的原话，不会自行添加剂量或医疗建议。</p>
+      </section>
+    </div>
+
+    <!-- Let me look: the live camera. -->
+    <div id="panel-monitor" class="panel" role="tabpanel" aria-labelledby="tab-monitor">
+      <section class="card fall-card" aria-labelledby="fall-h">
+        <div class="card-head">
+          <h2 id="fall-h">跌倒检测</h2>
+          <span id="fall-status" class="meta">未开启</span>
+        </div>
+        <div class="fall-view">
+          <img id="fall-stream" alt="跌倒检测" hidden="" src="data:,">
+          <p id="fall-offline" class="fall-offline">跌倒检测未开启。</p>
+        </div>
+        <div class="fall-controls" role="group" aria-label="画面来源">
+          <button type="button" class="btn btn-small btn-ghost-light" data-fall-mode="camera" aria-pressed="false">摄像头</button>
+          <button type="button" class="btn btn-small btn-ghost-light" data-fall-mode="demo" aria-pressed="false">演示视频</button>
+          <button type="button" class="btn btn-small btn-ghost-light" data-fall-mode="stop" aria-pressed="true">暂停</button>
+        </div>
+        <p id="fall-error" class="fall-error" role="alert" hidden=""></p>
+      </section>
+    </div>
+
+    <!-- What did she say: the transcript, for when the summary is not enough. -->
+    <div id="panel-chat" class="panel" role="tabpanel" aria-labelledby="tab-chat" hidden="">
+      <section class="card history-card">
+        <details id="history" open="">
+          <summary><h2>聊天记录</h2> <span id="history-meta" class="meta">Maggie今天说了 11 句</span></summary>
+          <button id="history-older" type="button" class="btn btn-quiet history-older">加载更早的消息</button>
+          <ol id="history-list" class="history-list"><li class="history-msg user is-private"><p class="meta">Maggie · 0:20</p><p class="history-text private-note">Not shared: Maggie hasn't said yet whether to share this</p></li><li class="history-msg assistant is-private"><p class="meta">陪伴助手 · 0:20</p><p class="history-text private-note">Not shared: Maggie hasn't said yet whether to share this</p></li><li class="history-msg user"><p class="meta">Maggie · 0:20</p><p class="history-text">my chest feels tight and I cannot catch my breath</p></li><li class="history-msg assistant"><p class="meta">陪伴助手 · 0:20</p><p class="history-text">Maggie, that could be serious. Please call 911 right now, and then call Amy. I'm right here with you.</p></li><li class="history-msg assistant"><p class="meta">陪伴助手 · 0:21</p><p class="history-text">Good morning, Maggie! How is that knee feeling today?</p></li><li class="history-msg user is-private"><p class="meta">Maggie · 0:21</p><p class="history-text private-note">Not shared: Maggie hasn't said yet whether to share this</p></li><li class="history-msg assistant is-private"><p class="meta">陪伴助手 · 0:21</p><p class="history-text private-note">Not shared: Maggie hasn't said yet whether to share this</p></li><li class="history-msg user"><p class="meta">Maggie · 0:21</p><p class="history-text">my chest feels tight and I cannot catch my breath</p></li><li class="history-msg assistant"><p class="meta">陪伴助手 · 0:21</p><p class="history-text">Maggie, that could be serious. Please call 911 right now, and then call Amy. I'm right here with you.</p></li><li class="history-msg assistant"><p class="meta">陪伴助手 · 0:22</p><p class="history-text">Good morning, Maggie! How is that knee feeling today?</p></li><li class="history-msg user is-private"><p class="meta">Maggie · 0:22</p><p class="history-text private-note">Not shared: Maggie hasn't said yet whether to share this</p></li><li class="history-msg assistant is-private"><p class="meta">陪伴助手 · 0:22</p><p class="history-text private-note">Not shared: Maggie hasn't said yet whether to share this</p></li><li class="history-msg user"><p class="meta">Maggie · 0:23</p><p class="history-text">my chest feels tight and I cannot catch my breath</p></li><li class="history-msg assistant"><p class="meta">陪伴助手 · 0:23</p><p class="history-text">Maggie, that could be serious. Please call 911 right now, and then call Amy. I'm right here with you.</p></li><li class="history-msg assistant"><p class="meta">陪伴助手 · 0:24</p><p class="history-text">Good morning, Maggie! How is that knee feeling today?</p></li><li class="history-msg user is-private"><p class="meta">Maggie · 0:24</p><p class="history-text private-note">Not shared: Maggie hasn't said yet whether to share this</p></li><li class="history-msg assistant is-private"><p class="meta">陪伴助手 · 0:24</p><p class="history-text private-note">Not shared: Maggie hasn't said yet whether to share this</p></li><li class="history-msg user"><p class="meta">Maggie · 0:24</p><p class="history-text">my chest feels tight and I cannot catch my breath</p></li><li class="history-msg assistant"><p class="meta">陪伴助手 · 0:24</p><p class="history-text">Maggie, that could be serious. Please call 911 right now, and then call Amy. I'm right here with you.</p></li><li class="history-msg assistant"><p class="meta">陪伴助手 · 0:25</p><p class="history-text">Good morning, Maggie! How is that knee feeling today?</p></li><li class="history-msg user is-private"><p class="meta">Maggie · 0:25</p><p class="history-text private-note">Not shared: Maggie hasn't said yet whether to share this</p></li><li class="history-msg assistant is-private"><p class="meta">陪伴助手 · 0:25</p><p class="history-text private-note">Not shared: Maggie hasn't said yet whether to share this</p></li><li class="history-msg user"><p class="meta">Maggie · 0:26</p><p class="history-text">my chest feels tight and I cannot catch my breath</p></li><li class="history-msg assistant"><p class="meta">陪伴助手 · 0:26</p><p class="history-text">Maggie, that could be serious. Please call 911 right now, and then call Amy. I'm right here with you.</p></li><li class="history-msg assistant"><p class="meta">陪伴助手 · 0:33</p><p class="history-text">Good morning, Maggie! How is that knee feeling today?</p></li><li class="history-msg user"><p class="meta">Maggie · 0:33</p><p class="history-text">Good morning! I'm doing okay today.</p></li><li class="history-msg assistant"><p class="meta">陪伴助手 · 0:33</p><p class="history-text">That's lovely to hear, Maggie. Tell me a little more?</p></li><li class="history-msg assistant"><p class="meta">陪伴助手 · 11:34</p><p class="history-text">Good morning, Maggie! Amy asked me to check in about your blood pressure pill with breakfast. Have you had it yet?</p></li><li class="history-msg assistant"><p class="meta">陪伴助手 · 11:36</p><p class="history-text">Good morning, Maggie! How is that knee feeling today?</p></li><li class="history-msg assistant"><p class="meta">陪伴助手 · 11:38</p><p class="history-text">Good morning, Maggie! How is that knee feeling today?</p></li></ol>
+        </details>
+      </section>
+    </div>
+
+    <footer class="dash-footer">
+      小结和症状记录由 AI 从Maggie的聊天中自动整理，可能不完整，不构成医疗建议。
+      当Maggie要求某件事保密时，它不会出现在这个页面上，紧急安全告警除外。
+    </footer>
+  </main>
+
+  <nav class="tabbar" role="tablist" aria-label="Maggie的今天">
+    <button id="tab-today" type="button" role="tab" aria-selected="false" aria-controls="panel-today" data-panel="today">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"></path><path d="M5.5 10v9.5h13V10"></path></svg>
+      今天
+    </button>
+    <button id="tab-alerts" type="button" role="tab" aria-selected="false" aria-controls="panel-alerts" data-panel="alerts">
+      <span class="tab-wrap">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 10a6 6 0 1 1 12 0c0 4 1.5 5.5 1.5 5.5h-15S6 14 6 10Z"></path><path d="M10 19a2 2 0 0 0 4 0"></path></svg>
+        <span id="tab-badge" class="tab-dot">9+</span>
+      </span>
+      提醒
+    </button>
+    <button id="tab-care" type="button" role="tab" aria-selected="false" aria-controls="panel-care" data-panel="care">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-9.3A4 4 0 0 1 12 8a4 4 0 0 1 7 2.7C19 15.6 12 20 12 20Z"></path></svg>
+      关心
+    </button>
+    <button id="tab-monitor" type="button" role="tab" aria-selected="true" aria-controls="panel-monitor" data-panel="monitor">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="13" height="12" rx="2.5"></rect><path d="m16 11 5-3v8l-5-3z"></path></svg>
+      监控
+    </button>
+    <button id="tab-chat" type="button" role="tab" aria-selected="false" aria-controls="panel-chat" data-panel="chat">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a7.5 7.5 0 0 1-11 6.6L4 20l1.5-4.3A7.5 7.5 0 1 1 20 12Z"></path></svg>
+      聊天
+    </button>
+  </nav>
+
+  
+  
+  
+  
+  
+
+</body></html>
