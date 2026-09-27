@@ -1,66 +1,62 @@
 # Getting the screens into Figma
 
-You do not need anyone else's machine. Clone the repo, run one command, import.
+Nothing to install, nothing to run. Every screen is already on the web.
 
 ## Do this
 
-**1. Install the plugin.** In Figma: **Resources → Plugins**, search
-**html.to.design**, install.
+**1.** In Figma: **Resources → Plugins**, search **html.to.design**, install it.
 
-**2. Start the app.** In a terminal:
-
-```bash
-git clone https://github.com/SeroGoingCrazy/AI-companion-for-elder.git
-cd AI-companion-for-elder
-./scripts/demo_up.sh
-```
-
-Needs [uv](https://docs.astral.sh/uv/) and Python 3.12. No API key. Leave that terminal
-open; Ctrl-C there stops the app.
-
-**3. Import each screen.** Run the plugin, paste an address, set the width, click import.
-One at a time.
+**2.** Run the plugin, paste an address from the table, set the width, click import. One
+screen at a time.
 
 | Screen | Paste this | Width |
 |---|---|---|
-| Elder app | `http://127.0.0.1:8000/elder` | 390 |
-| Today | `http://127.0.0.1:8000/family?tab=today` | 390 |
-| Alerts | `http://127.0.0.1:8000/family?tab=alerts` | 390 |
-| Care | `http://127.0.0.1:8000/family?tab=care` | 390 |
-| Camera | `http://127.0.0.1:8000/family?tab=monitor` | 390 |
-| Chat | `http://127.0.0.1:8000/family?tab=chat` | 390 |
-| Weekly report | `http://127.0.0.1:8000/family/report/weekly` | 900 |
-| Doctor one-pager | `http://127.0.0.1:8000/family/doctor` | 900 |
-| Her stories | `http://127.0.0.1:8000/family/memoir` | 900 |
-| Dashboard, wide | `http://127.0.0.1:8000/family` | 1280 |
+| Elder app | `https://jessai2026.github.io/AI-companion-for-elder/demo/html/en/01-elder-start.html` | 390 |
+| Elder app, talking | `https://jessai2026.github.io/AI-companion-for-elder/demo/html/en/02-elder-chat.html` | 390 |
+| Today | `https://jessai2026.github.io/AI-companion-for-elder/demo/html/en/03-today.html` | 390 |
+| Alerts | `https://jessai2026.github.io/AI-companion-for-elder/demo/html/en/04-alerts.html` | 390 |
+| Care | `https://jessai2026.github.io/AI-companion-for-elder/demo/html/en/05-care.html` | 390 |
+| Camera | `https://jessai2026.github.io/AI-companion-for-elder/demo/html/en/06-camera.html` | 390 |
+| Chat | `https://jessai2026.github.io/AI-companion-for-elder/demo/html/en/07-chat.html` | 390 |
+| Weekly report | `https://jessai2026.github.io/AI-companion-for-elder/demo/html/en/08-weekly.html` | 900 |
+| Doctor one-pager | `https://jessai2026.github.io/AI-companion-for-elder/demo/html/en/09-doctor.html` | 900 |
+| Her stories | `https://jessai2026.github.io/AI-companion-for-elder/demo/html/en/10-memoir.html` | 900 |
+| Dashboard, wide | `https://jessai2026.github.io/AI-companion-for-elder/demo/html/en/11-dashboard-wide.html` | 1280 |
 
-That is the whole thing.
+That is all of it.
+
+**For the Chinese interface**, change `/en/` to `/zh/` in any of those addresses.
+
+Open any of them in a browser first if you want to see what you are importing.
 
 ## If something is odd
 
-**The plugin cannot reach the address.** Some versions of html.to.design fetch through
-their own server, which cannot see `127.0.0.1`. Put the app on a public address instead:
+**A heading looks wrong after import.** Install **Atkinson Hyperlegible Next** and
+**Fraunces** locally, both free from Google Fonts, and Figma will pick them up.
+
+**A screen looks out of date.** These are snapshots taken from the running app. After a UI
+change, regenerate and push them:
 
 ```bash
-./scripts/share.sh
+./scripts/demo_up.sh
+uv run --with playwright python scripts/export_html.py --lang en
+uv run --with playwright python scripts/export_html.py --lang zh
+git add demo/html && git commit -m "chore: refresh exported screens" && git push
 ```
 
-It prints an `https://…` address. Use that in place of `http://127.0.0.1:8000` in the
-table above. The address changes every run, so import in one sitting.
+GitHub Pages serves the `merge/upstream-dev` branch, so a push updates the addresses
+within a minute or two.
 
-**A heading looks wrong.** Install **Atkinson Hyperlegible Next** and **Fraunces**
-locally; both are free from Google Fonts.
+**You want to import from the app as it runs**, rather than from a snapshot — for a state
+these files do not cover, say. Start it and use the local addresses instead:
 
-**Only one tab shows up.** The dashboard shows one tab at a time on purpose. Each tab is
-its own import — that is what `?tab=` is doing.
+```bash
+./scripts/demo_up.sh
+```
 
-**Nothing is running and you just want the files.** They are committed:
-`demo/html/en/` and `demo/html/zh/`, eleven screens each. Open one to look at it. In the
-plugin, switch from **URL** to **Code** and paste the file's contents. Regenerate them
-after a UI change with `uv run --with playwright python scripts/export_html.py`.
-
-**You want the Chinese interface.** Add `&lang=zh` to any address, or `?lang=zh` where
-there is no `?` yet.
+Then `http://127.0.0.1:8000/elder`, `http://127.0.0.1:8000/family?tab=care`, and so on.
+Some builds of the plugin fetch through their own server and cannot reach `127.0.0.1`; if
+that happens, `./scripts/share.sh` prints a public address to use instead.
 
 ## What the import gives you
 

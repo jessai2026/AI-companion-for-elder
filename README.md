@@ -19,7 +19,7 @@ Both surfaces install to a phone home screen, in English or Simplified Chinese.
 > This product does not provide medical diagnosis.
 
 How to run it, and how to get it onto a phone: [docs/RUNNING.md](docs/RUNNING.md).
-Getting the screens into Figma: [docs/FIGMA.md](docs/FIGMA.md).
+Getting the screens into Figma, with no setup: [docs/FIGMA.md](docs/FIGMA.md). Every screen is also browsable at [jessai2026.github.io/AI-companion-for-elder](https://jessai2026.github.io/AI-companion-for-elder/demo/html/en/03-today.html).
 A walk through every feature with screenshots: [docs/FEATURES.md](docs/FEATURES.md).
 The full design and development plan: [DEV_SPEC.md](DEV_SPEC.md).
 
